@@ -17,6 +17,9 @@
                   echo "hello world"
                   echo "Install TwistCLI"
                   ls
+                  echo $SECR_USER
+                  echo $SECR_CONSOLEURL
+                  echo $SECR_PASSWORD
                   curl -k -O -u $SECR_USER:$SECR_PASSWORD $SECR_CONSOLEURL/api/v1/util/twistcli
                   pwd
                   ls
