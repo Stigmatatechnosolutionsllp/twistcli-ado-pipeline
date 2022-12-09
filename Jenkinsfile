@@ -13,12 +13,14 @@
     stages {
         stage('Install TwistCli') { 
             steps {
-                  sh '''#!/bin/bash
+                 sh '''#!/bin/bash
                   echo "hello world"
                   echo "Install TwistCLI"
                   ls
+                  curl -k -O -u $SECR_USER:$SECR_PASSWORD $SECR_CONSOLEURL/api/v1/util/twistcli
                   pwd
                   ls
+                  chmod a+x twistcli;
                 '''
             }
         }
