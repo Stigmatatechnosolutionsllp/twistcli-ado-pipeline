@@ -9,6 +9,9 @@
        */
       SECR = credentials("prismacloudsecrets")
     }
+  withCredentials([usernamePassword(credentialsId: 'prisma_secret', passwordVariable: 'pass', usernameVariable: 'user')]) {
+    // the code here can access $pass and $user
+   
     agent any 
     stages {
         stage('Install TwistCli') { 
@@ -20,7 +23,7 @@
                   echo $SECR_USER
                   echo $SECR_CONSOLEURL
                   echo $SECR_PASSWORD
-                  curl -k -O -u $SECR_USER:$SECR_PASSWORD $SECR_CONSOLEURL/api/v1/util/twistcli
+                  curl -k -O -u $user:$password $SECR_CONSOLEURL/api/v1/util/twistcli
                   pwd
                   ls
                   chmod a+x twistcli;
@@ -28,4 +31,5 @@
             }
         }
     }
+  }
  }
