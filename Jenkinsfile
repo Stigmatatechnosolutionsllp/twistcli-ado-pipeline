@@ -29,5 +29,28 @@
                 '''
             }
         }
+     stage('Pull Public Docker Image') { 
+            steps {
+                  sh '''#!/bin/bash
+                  docker pull bitnami/rabbitmq
+                '''
+            }
+        }
+        stage('Image Vulnerability Scan') { 
+            steps {
+                  sh '''#!/bin/bash
+                  echo "Start Image Scan"
+                  ./twistcli images scan --details --address ${CONSOLEURL} --u ${USER} -p ${PASSWORD} bitnami/rabbitmq
+                '''
+            }
+        }
+        stage('Runtime - Image Analysis Sandbox') { 
+            steps {
+                  sh '''#!/bin/bash
+                  echo "Start Image Scan"
+                  sudo ./twistcli sandbox --analysis-duration 30s --address ${CONSOLEURL} --u ${USER} -p ${PASSWORD} bitnami/rabbitmq
+                '''
+            }
+        }
     }
  }
