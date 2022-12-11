@@ -8,6 +8,7 @@
        * "$FOO_PSW" will contain string for Password
        */
       SECR = credentials("prisma_secret")
+      twistlock_url = credentials("prisma_secret")
     }
    
     agent any 
@@ -21,7 +22,7 @@
                   echo $SECR_USER
                   echo $SECR_CONSOLEURL
                   echo $SECR_PASSWORD
-                  curl -k -O -u $SECR_USR:$SECR_PSW https://us-east1.cloud.twistlock.com/us-1-111573457/api/v1/util/twistcli
+                  curl -k -O -u $SECR_USR:$SECR_PSW $twistlock_url/api/v1/util/twistcli
                   pwd
                   ls
                   env
@@ -40,7 +41,7 @@
             steps {
                   sh '''#!/bin/bash
                   echo "Start Image Scan"
-                  ./twistcli images scan --details --address ${CONSOLEURL} --u ${USER} -p ${PASSWORD} bitnami/rabbitmq
+                  ./twistcli images scan --details --address ${twistlock_url} --u ${SECR_USR} -p ${SECR_PSW} bitnami/rabbitmq
                 '''
             }
         }
@@ -48,7 +49,7 @@
             steps {
                   sh '''#!/bin/bash
                   echo "Start Image Scan"
-                  sudo ./twistcli sandbox --analysis-duration 30s --address ${CONSOLEURL} --u ${USER} -p ${PASSWORD} bitnami/rabbitmq
+                  sudo ./twistcli sandbox --analysis-duration 30s --address ${twistlock_url} --u ${SECR_USR} -p ${SECR_PSW} bitnami/rabbitmq
                 '''
             }
         }
