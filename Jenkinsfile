@@ -8,7 +8,7 @@
        * "$FOO_PSW" will contain string for Password
        */
       SECR = credentials("prisma_secret")
-      twistlock_url = credentials("prisma_secret")
+      twistlock_url = credentials("prisma_url")
     }
    
     agent any 
